@@ -18,14 +18,12 @@ type ConfigurableSleeper struct {
 	sleep    func(time.Duration)
 }
 
-type RealSleeper struct{}
-
-func (s RealSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
+func (c *ConfigurableSleeper) Sleep()  {
+	c.sleep(c.duration)
 }
 
 func main() {
-	sleeper := RealSleeper{}
+	sleeper := &ConfigurableSleeper{1 * time.Second, time.Sleep}
 	Countdown(os.Stdout, sleeper)
 }
 
